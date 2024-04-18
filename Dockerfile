@@ -74,3 +74,4 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 CMD mongod --fork --logpath /var/log/mongod.log --noauth --dbpath /data/db && \
     meilisearch --http-addr 0.0.0.0:7700 --db-path /meili_data & \
     node server/index.js
+

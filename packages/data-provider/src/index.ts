@@ -1,7 +1,10 @@
 /* config */
+export * from './azure';
 export * from './config';
+export * from './file-config';
 /* schema helpers  */
 export * from './parsers';
+export * from './generate';
 /* types (exports schemas from `./types` as they contain needed in other defs) */
 export * from './types';
 export * from './types/assistants';
@@ -17,4 +20,5 @@ import * as dataService from './data-service';
 export { dataService };
 /* general helpers */
 export * from './sse';
+export * from './actions';
 export { default as createPayload } from './createPayload';
