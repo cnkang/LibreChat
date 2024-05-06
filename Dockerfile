@@ -6,6 +6,7 @@ FROM base AS data-provider-build
 WORKDIR /app/packages/data-provider
 COPY ./packages/data-provider ./
 RUN npm install
+RUN npm exec openai migrate
 RUN npm run build
 
 # React 客户端构建
@@ -26,6 +27,8 @@ COPY api/ ./
 # 从数据提供者构建阶段复制到 API 的 node_modules
 COPY --from=data-provider-build /app/packages/data-provider /app/api/node_modules/librechat-data-provider
 RUN npm install
+RUN npm exec openai migrate
+
 # 从客户端构建阶段复制构建的静态文件
 COPY --from=client-build /app/client/dist /app/client/dist
 
