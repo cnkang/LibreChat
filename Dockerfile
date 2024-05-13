@@ -1,5 +1,18 @@
-# 基础镜像
+# v0.7.1
+
+# Base node image
 FROM node:lts AS base
+
+RUN apk add g++ make py3-pip
+RUN npm install -g node-gyp
+RUN apk --no-cache add curl
+
+RUN mkdir -p /app && chown node:node /app
+WORKDIR /app
+
+USER node
+
+COPY --chown=node:node . .
 
 # 数据提供者构建
 FROM base AS data-provider-build
@@ -15,7 +28,16 @@ WORKDIR /app/client
 COPY ./client/ ./
 # 从数据提供者构建阶段复制到客户端的 node_modules
 COPY --from=data-provider-build /app/packages/data-provider /app/client/node_modules/librechat-data-provider
-RUN npm install
+
+# Allow mounting of these files, which have no default
+# values.
+RUN touch .env
+RUN npm config set fetch-retry-maxtimeout 600000
+RUN npm config set fetch-retries 5
+RUN npm config set fetch-retry-mintimeout 15000
+RUN npm install --no-audit
+
+# React client build
 ENV NODE_OPTIONS="--max-old-space-size=2048"
 RUN npm run build
 
