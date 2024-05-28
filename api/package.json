@@ -68,7 +68,7 @@
     "langchain": "^0.1.31",
     "librechat-data-provider": "*",
     "lodash": "^4.17.21",
-    "meilisearch": "^0.38.0",
+    "meilisearch": "^0.39.0",
     "mime": "^3.0.0",
     "module-alias": "^2.2.3",
     "mongoose": "^7.1.1",
